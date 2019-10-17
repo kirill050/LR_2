@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/kirill/Documents/3_semestr/c++/2_lr_cache/cache.cpp
+iostream
+-
+vector
+-
+string
+-
+cmath
+-
+map
+-
+cstdlib
+-
+ctime
+-
+algorithm
+-
+fstream
+-
+

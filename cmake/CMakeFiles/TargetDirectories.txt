@@ -1,0 +1,3 @@
+/home/kirill/Documents/3_semestr/c++/2_lr_cache/cmake/CMakeFiles/rebuild_cache.dir
+/home/kirill/Documents/3_semestr/c++/2_lr_cache/cmake/CMakeFiles/main.dir
+/home/kirill/Documents/3_semestr/c++/2_lr_cache/cmake/CMakeFiles/edit_cache.dir
