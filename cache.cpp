@@ -14,7 +14,7 @@ class Experiment{
 public:
 	Experiment(const int &l1, const int &l2, const int &l3){
 		travel_variant = "Direct";
-		_ofile.open("direct2.txt");
+		_ofile.open("direct.txt");
 		cache_sizes['1'] = l1;
 		cache_sizes['2'] = l2;
 		cache_sizes['3'] = l3;
@@ -22,10 +22,10 @@ public:
 	Experiment(Experiment &prev_ex){
 		if (prev_ex.travel_variant == string("Direct")){
 			travel_variant = "Return";
-			_ofile.open("return2.txt");
+			_ofile.open("return.txt");
 		}
 		else{
-			_ofile.open("random2.txt");
+			_ofile.open("random.txt");
 			travel_variant = "Random";
 		}
 		//cache_sizes = prev_ex.cache_sizes;
@@ -64,10 +64,10 @@ public:
 			for (int cx = 0; cx < _size; cx++){
 				random_indexes.push_back(cx);
 			}
+			random_shuffle(random_indexes.begin(), random_indexes.end());
 			start = clock();
 			for (int ii = 0; ii < 1000; ii++){
                                 srand(time(NULL));
-				random_shuffle(random_indexes.begin(), random_indexes.end());
                                 for (int jj = 0; jj < _size; jj++){
                                         _buffer[random_indexes[jj]] = rand()%255;
                                 }
