@@ -1,7 +1,7 @@
 // Copyright 2019 Kirill <your_email>
 
 #include <header.hpp>
-
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 Experiment::Experiment(const int &l1, const int &l2, const int &l3)
     {
         travel_variant = "Direct";
@@ -85,7 +85,8 @@ Experiment::void create_test_buffer(const int _quantity)
     {
         _buffer = new unsigned char[_quantity];
         for (int i = 0; i < _quantity; i++){
-            _buffer[i] = rand()%256;
+            //_buffer[i] = rand()%256;
+            _buffer[i] = static_cast<char>(rand_r(&i) % 256 - 128);
         }
     }
 
@@ -95,7 +96,8 @@ Experiment::void warm_up_cache(const int _size)
         {
             for (int k = 0; k < _size; k++)
             {
-                _buffer[k] = rand()%255;
+                //_buffer[k] = rand()%255;
+                _buffer[k] = static_cast<char>(rand_r(&k) % 256 - 128);
             }
         }
     }
@@ -103,7 +105,7 @@ Experiment::void warm_up_cache(const int _size)
 Experiment::void run(int _size)
     {
         _ofile << _size << "  ";
-        unsigned start = 0;
+        clock_t start = 0;
         if (travel_variant == "Direct")
         {
             start = clock();
@@ -112,7 +114,8 @@ Experiment::void run(int _size)
                 srand(time(NULL));
                 for (int jj = 0; jj < _size; jj++)
                 {
-                    _buffer[jj] = rand()%255;
+                    //_buffer[jj] = rand()%255;
+                    _buffer[jj] = static_cast<char>(rand_r(&jj) % 256 - 128);
                 }
             }
         } else if (travel_variant == "Return") {
@@ -122,7 +125,8 @@ Experiment::void run(int _size)
                 srand(time(NULL));
                 for (int jj = (_size -1); jj >= 0 ; jj--)
                 {
-                    _buffer[jj] = rand()%255;
+                    //_buffer[jj] = rand()%255;
+                    _buffer[jj] = static_cast<char>(rand_r(&jj) % 256 - 128);
                 }
              }
         } else {
@@ -138,7 +142,8 @@ Experiment::void run(int _size)
                  srand(time(NULL));
                  for (int jj = 0; jj < _size; jj++)
                  {
-                     _buffer[random_indexes[jj]] = rand()%255;
+                     //_buffer[random_indexes[jj]] = rand()%255;
+                     _buffer[jj] = static_cast<char>(rand_r(&jj) % 256 - 128);
                   }
              }
         }
@@ -146,13 +151,13 @@ Experiment::void run(int _size)
         stop(start);
     }
 
-Experiment::void stop(unsigned start)
+Experiment::void stop(clock_t start)
     {
-        unsigned stop_t = clock();
-        unsigned duration = stop_t - start;
-        cout << ((float) duration) / CLOCKS_PER_SEC << "sec" << endl;
+        clock_t stop_t = clock();
+        clock_t duration = stop_t - start;
+        cout << duration << "ms" << endl;
         _duration.push_back(duration);
-        _ofile << ((float) duration) / CLOCKS_PER_SEC << endl;
+        _ofile << duration << endl;
     }
 
 Experiment::void print_results()
@@ -168,11 +173,12 @@ Experiment::void print_results()
             cout << "\t\t buffer_size:";
             if ((_buffer_sizes[0] >= _buffer_sizes[1]) && (!i))
             {
-                            cout << _buffer_sizes[i] << "kb ";
-                    } else cout << _buffer_sizes[i] << "mb ";
+                cout << _buffer_sizes[i] << "kb ";
+            } else
+                cout << _buffer_sizes[i] << "mb ";
             cout << endl << "\t\tresults:" << endl;
             cout << "\t\t duration: ";
-            cout << ((float) _duration[i]) / CLOCKS_PER_SEC << "sec";
+            cout << _duration[i] << "ms";
             cout << endl;
         }
     }

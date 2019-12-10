@@ -41,10 +41,11 @@ private:
     int _number_of_experiments;
     vector <int> _buffer_sizes;
     unsigned char *_buffer;
-    vector <int> _duration;
+    vector <clock_t> _duration;
     ofstream _ofile;
 };
 
 void Pushnoy(int l1, int l2, int l3);
 
 #endif // INCLUDE_HEADER_HPP_
+
