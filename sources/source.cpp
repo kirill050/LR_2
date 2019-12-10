@@ -172,9 +172,8 @@ Experiment::void print_results()
             cout << "\t\tinput data: "  << endl;
             cout << "\t\t buffer_size:";
             if ((_buffer_sizes[0] >= _buffer_sizes[1]) && (!i))
-            {
                 cout << _buffer_sizes[i] << "kb ";
-            } else
+            else
                 cout << _buffer_sizes[i] << "mb ";
             cout << endl << "\t\tresults:" << endl;
             cout << "\t\t duration: ";
