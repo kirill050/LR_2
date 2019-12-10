@@ -1,23 +1,8 @@
-// Copyright 2018 Your Name <your_email>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <cmath>
-#include <map>
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
-#include <fstream>
+// Copyright 2019 Kirill <your_email>
 
-using std::vector;
-using std::string;
-using std::cout;
-using std::endl;
+#include <header.hpp>
 
-class Experiment
-{
-public:
-    Experiment(const int &l1, const int &l2, const int &l3)
+Experiment::Experiment(const int &l1, const int &l2, const int &l3)
     {
         travel_variant = "Direct";
         _ofile.open("direct.txt");
@@ -26,7 +11,7 @@ public:
         cache_sizes['3'] = l3;
     }
 
-    Experiment(Experiment &prev_ex)
+Experiment::Experiment(Experiment &prev_ex)
     {
         if (prev_ex.travel_variant == string("Direct"))
         {
@@ -41,18 +26,18 @@ public:
         cache_sizes['3'] = prev_ex.cache_sizes['3'];
     }
 
-    ~Experiment()
+Experiment::~Experiment()
     {
         _ofile.close();
         delete _buffer;
     }
 
-    string get_travel_variant()
+Experiment::string get_travel_variant()
     {
         return travel_variant;
     }
 
-    void count_number_of_experiments()
+Experiment::void count_number_of_experiments()
     {
         int buf_size =  cache_sizes['1'] * 0.5;
         _buffer_sizes.push_back(buf_size);
@@ -96,7 +81,7 @@ public:
         _number_of_experiments = _buffer_sizes.size();
     }
 
-    void create_test_buffer(const int _quantity)
+Experiment::void create_test_buffer(const int _quantity)
     {
         _buffer = new unsigned char[_quantity];
         for (int i = 0; i < _quantity; i++){
@@ -104,15 +89,18 @@ public:
         }
     }
 
-    void warm_up_cache(const int _size){
-        for (int j = 0; j < 100; j++){
-            for (int k = 0; k < _size; k++){
+Experiment::void warm_up_cache(const int _size)
+    {
+        for (int j = 0; j < 100; j++)
+        {
+            for (int k = 0; k < _size; k++)
+            {
                 _buffer[k] = rand()%255;
             }
         }
     }
 
-    void run(int _size)
+Experiment::void run(int _size)
     {
         _ofile << _size << "  ";
         unsigned start = 0;
@@ -158,7 +146,7 @@ public:
         stop(start);
     }
 
-    void stop(unsigned start)
+Experiment::void stop(unsigned start)
     {
         unsigned stop_t = clock();
         unsigned duration = stop_t - start;
@@ -167,7 +155,7 @@ public:
         _ofile << ((float) duration) / CLOCKS_PER_SEC << endl;
     }
 
-    void print_results()
+Experiment::void print_results()
     {
         cout << "investigation:" << endl;
         cout << "\ttravel_variant: " << travel_variant << endl;
@@ -189,7 +177,7 @@ public:
         }
     }
 
-    void just_do_it()
+Experiment::void just_do_it()
     {
         count_number_of_experiments();
         for (int j = 0; j < _number_of_experiments; j++)
@@ -207,18 +195,6 @@ public:
         print_results();
     }
 
-public:
-    string travel_variant;
-    map <char, int> cache_sizes;
-
-private:
-    int _number_of_experiments;
-    vector <int> _buffer_sizes;
-    unsigned char *_buffer;
-    vector <int> _duration;
-    ofstream _ofile;
-};
-
 void Pushnoy(int l1, int l2, int l3)
 {
     Experiment ex_1(l1, l2, l3);
@@ -230,6 +206,7 @@ void Pushnoy(int l1, int l2, int l3)
     Experiment ex_3 = ex_2;
     ex_3.just_do_it();
 }
+
 int main()
 {
     cout << "It`s alive!" << endl;
