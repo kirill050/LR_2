@@ -28,10 +28,10 @@ public:
     ~Experiment();
     string get_travel_variant();
     void count_number_of_experiments();
-    void create_test_buffer(const size_t _quantity);
+    void create_test_buffer(const int _quantity);
     void warm_up_cache(const size_t _size);
     void run(size_t _size);
-    void stop(clock_t start);
+    void stop(clock_t start)
     void print_results();
     void just_do_it();
 
@@ -40,7 +40,7 @@ public:
     map <char, int> cache_sizes;
 
 private:
-    size_t _number_of_experiments;
+    int _number_of_experiments;
     vector <int> _buffer_sizes;
     unsigned char *_buffer;
     vector <clock_t> _duration;
