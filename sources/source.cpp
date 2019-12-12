@@ -1,10 +1,10 @@
 // Copyright 2019 Kirill <your_email>
 
 #include <header.hpp>
-kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+
 Experiment::Experiment(const int &l1, const int &l2, const int &l3)
     {
-        travel_variant = "Direct";
+        this.travel_variant = "Direct";
         _ofile.open("direct.txt");
         cache_sizes['1'] = l1;
         cache_sizes['2'] = l2;
@@ -32,12 +32,12 @@ Experiment::~Experiment()
         delete _buffer;
     }
 
-Experiment::string get_travel_variant()
+string Experiment::get_travel_variant()
     {
         return travel_variant;
     }
 
-Experiment::void count_number_of_experiments()
+void Experiment::count_number_of_experiments()
     {
         int buf_size =  cache_sizes['1'] * 0.5;
         _buffer_sizes.push_back(buf_size);
@@ -81,7 +81,7 @@ Experiment::void count_number_of_experiments()
         _number_of_experiments = _buffer_sizes.size();
     }
 
-Experiment::void create_test_buffer(const int _quantity)
+void Experiment::create_test_buffer(const int _quantity)
     {
         _buffer = new unsigned char[_quantity];
         for (int i = 0; i < _quantity; i++){
@@ -90,7 +90,7 @@ Experiment::void create_test_buffer(const int _quantity)
         }
     }
 
-Experiment::void warm_up_cache(const int _size)
+void Experiment::warm_up_cache(const int _size)
     {
         for (int j = 0; j < 100; j++)
         {
@@ -102,7 +102,7 @@ Experiment::void warm_up_cache(const int _size)
         }
     }
 
-Experiment::void run(int _size)
+void Experiment::run(int _size)
     {
         _ofile << _size << "  ";
         clock_t start = 0;
@@ -151,7 +151,7 @@ Experiment::void run(int _size)
         stop(start);
     }
 
-Experiment::void stop(clock_t start)
+void Experiment::stop(clock_t start)
     {
         clock_t stop_t = clock();
         clock_t duration = stop_t - start;
@@ -160,7 +160,7 @@ Experiment::void stop(clock_t start)
         _ofile << duration << endl;
     }
 
-Experiment::void print_results()
+void Experiment::print_results()
     {
         cout << "investigation:" << endl;
         cout << "\ttravel_variant: " << travel_variant << endl;
@@ -182,7 +182,7 @@ Experiment::void print_results()
         }
     }
 
-Experiment::void just_do_it()
+void Experiment::just_do_it()
     {
         count_number_of_experiments();
         for (int j = 0; j < _number_of_experiments; j++)

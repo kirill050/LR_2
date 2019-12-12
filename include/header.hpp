@@ -17,6 +17,8 @@ using std::vector;
 using std::string;
 using std::cout;
 using std::endl;
+using std::map;
+using std::ofstream;
 
 class Experiment
 {
