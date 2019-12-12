@@ -31,7 +31,7 @@ public:
     void create_test_buffer(const int _quantity);
     void warm_up_cache(const int _size);
     void run(int _size);
-    void stop(unsigned start);
+    void stop(clock_t start)
     void print_results();
     void just_do_it();
 

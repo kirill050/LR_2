@@ -4,7 +4,7 @@
 
 Experiment::Experiment(const int &l1, const int &l2, const int &l3)
     {
-        this.travel_variant = "Direct";
+        this->travel_variant = "Direct";
         _ofile.open("direct.txt");
         cache_sizes['1'] = l1;
         cache_sizes['2'] = l2;
@@ -81,69 +81,72 @@ void Experiment::count_number_of_experiments()
         _number_of_experiments = _buffer_sizes.size();
     }
 
-void Experiment::create_test_buffer(const int _quantity)
+void Experiment::create_test_buffer(const size_t _quantity)
     {
+	unsigned now = time(0);
         _buffer = new unsigned char[_quantity];
-        for (int i = 0; i < _quantity; i++){
+        for (size_t i = 0; i < _quantity; ++i){
             //_buffer[i] = rand()%256;
-            _buffer[i] = static_cast<char>(rand_r(&i) % 256 - 128);
+            _buffer[i] = static_cast<char>(rand_r(&now) % 256 - 128);
         }
     }
 
-void Experiment::warm_up_cache(const int _size)
+void Experiment::warm_up_cache(const size_t _size)
     {
-        for (int j = 0; j < 100; j++)
+	unsigned now = time(0);
+        for (size_t j = 0; j < 100; ++j)
         {
-            for (int k = 0; k < _size; k++)
+            for (size_t k = 0; k < _size; ++k)
             {
                 //_buffer[k] = rand()%255;
-                _buffer[k] = static_cast<char>(rand_r(&k) % 256 - 128);
+                _buffer[k] = static_cast<char>(rand_r(&now) % 256 - 128);
             }
         }
     }
 
-void Experiment::run(int _size)
+void Experiment::run(size_t _size)
     {
         _ofile << _size << "  ";
         clock_t start = 0;
+	unsigned now = time(0);
         if (travel_variant == "Direct")
         {
             start = clock();
-            for (int ii = 0; ii < 1000; ii++)
+            for (size_t ii = 0; ii < 1000; ++ii)
             {
                 srand(time(NULL));
-                for (int jj = 0; jj < _size; jj++)
+                for (size_t jj = 0; jj < _size; ++jj)
                 {
                     //_buffer[jj] = rand()%255;
-                    _buffer[jj] = static_cast<char>(rand_r(&jj) % 256 - 128);
+                    _buffer[jj] = static_cast<char>(rand_r(&now) % 256 - 128);
                 }
             }
         } else if (travel_variant == "Return") {
             start = clock();
-            for (int ii = 0; ii < 1000; ii++)
+            for (size_t ii = 0; ii < 1000; ++ii)
             {
                 srand(time(NULL));
-                for (int jj = (_size -1); jj >= 0 ; jj--)
+                for (size_t jj = (_size -1); jj >= 0 ; --jj)
                 {
                     //_buffer[jj] = rand()%255;
-                    _buffer[jj] = static_cast<char>(rand_r(&jj) % 256 - 128);
+                    _buffer[jj] = static_cast<char>(rand_r(&now) % 256 - 128);
                 }
              }
         } else {
             vector <int> random_indexes;
-            for (int cx = 0; cx < _size; cx++)
+            for (size_t cx = 0; cx < _size; ++cx)
             {
                 random_indexes.push_back(cx);
             }
             random_shuffle(random_indexes.begin(), random_indexes.end());
             start = clock();
-            for (int ii = 0; ii < 1000; ii++)
+            now = time(0);
+            for (size_t ii = 0; ii < 1000; ++ii)
             {
-                 srand(time(NULL));
-                 for (int jj = 0; jj < _size; jj++)
+                 for (size_t jj = 0; jj < _size; ++jj)
                  {
                      //_buffer[random_indexes[jj]] = rand()%255;
-                     _buffer[jj] = static_cast<char>(rand_r(&jj) % 256 - 128);
+                     _buffer[jj] = static_cast<char>(rand_r(&now) % 256 - 128);
                   }
              }
         }
@@ -165,7 +168,7 @@ void Experiment::print_results()
         cout << "investigation:" << endl;
         cout << "\ttravel_variant: " << travel_variant << endl;
         cout << "\texperiments:" << endl;
-        for (int i = 0; i < _number_of_experiments; i++)
+        for (size_t i = 0; i < _number_of_experiments; ++i)
         {
             cout << "\t--experiment:" << endl;
             cout << "\t\tnumber:" << i << endl;
@@ -185,14 +188,14 @@ void Experiment::print_results()
 void Experiment::just_do_it()
     {
         count_number_of_experiments();
-        for (int j = 0; j < _number_of_experiments; j++)
+        for (size_t j = 0; j < _number_of_experiments; ++j)
         {
             int factor = pow(2.0, 20.0);
             if ((_buffer_sizes[0] >= _buffer_sizes[1]) && (!j))
             {
                  factor = pow(2.0, 10.0);
             }
-            int size = _buffer_sizes[j]*factor;
+            size_t size = _buffer_sizes[j]*factor;
             create_test_buffer(size);
             warm_up_cache(size);
             run(size);
