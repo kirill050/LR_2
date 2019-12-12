@@ -83,7 +83,7 @@ void Experiment::count_number_of_experiments()
 
 void Experiment::create_test_buffer(const size_t _quantity)
     {
-        unsigned now = time(0);
+	unsigned now = time(0);
         _buffer = new unsigned char[_quantity];
         for (size_t i = 0; i < _quantity; ++i){
             //_buffer[i] = rand()%256;
@@ -93,7 +93,7 @@ void Experiment::create_test_buffer(const size_t _quantity)
 
 void Experiment::warm_up_cache(const size_t _size)
     {
-    unsigned now = time(0);
+	unsigned now = time(0);
         for (size_t j = 0; j < 100; ++j)
         {
             for (size_t k = 0; k < _size; ++k)
@@ -108,7 +108,7 @@ void Experiment::run(size_t _size)
     {
         _ofile << _size << "  ";
         clock_t start = 0;
-        unsigned now = time(0);
+	unsigned now = time(0);
         if (travel_variant == "Direct")
         {
             start = clock();
