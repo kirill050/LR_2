@@ -29,8 +29,8 @@ public:
     string get_travel_variant();
     void count_number_of_experiments();
     void create_test_buffer(const int _quantity);
-    void warm_up_cache(const int _size);
-    void run(int _size);
+    void warm_up_cache(const size_t _size);
+    void run(size_t _size);
     void stop(clock_t start)
     void print_results();
     void just_do_it();
